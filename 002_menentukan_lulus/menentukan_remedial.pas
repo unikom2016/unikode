@@ -4,93 +4,63 @@ uses
   crt;
 
 var
-  nama, keterangan : string;
-  mtk, indo, ing, ipa, standar : integer;
+  nama, keterangan                 : string;
+  mtk, indo, ing, ipa, standar     : real;
+  i                                : integer; // index
+
 begin
+
+  { Data Input }
   write('Masukkan Nama         : ');readln(nama);
   write('Nilai Matematika      : ');readln(mtk);
   write('Nilai Bhs. Indonesia  : ');readln(indo);
   write('Nilai Bhs. Inggris    : ');readln(ing);
   write('Nilai IPA             : ');readln(ipa);
   write('Standar Kelulusan     : ');readln(standar);
-    keterangan := 'Selamat Anda Lulus Semua Mata Pelajaran';
-    if (mtk < standar) and (indo < standar) and (ing < standar) and (ipa < standar) then
-      begin
-        keterangan := 'Tidak Lulus Semua ';
-      end
-      else
-        if (mtk < standar) and (indo < standar) and (ing < standar) then
-          begin
-            keterangan := '1. Matematika 2. Bhs. Indonesia 3. Bhs Inggris';
-          end
-          else
-            if (mtk < standar) and (indo < standar) and (ipa < standar) then
-              begin
-                keterangan := '1. Matematika 2. Bhs. Indonesia 3. IPA';
-              end
-              else
-                if (mtk < standar)  and (ing < standar) and (ipa < standar) then
-                  begin
-                    keterangan := '1. Matematika 2. Bhs Inggris 3. IPA';
-                  end
-                  else
-                    if (mtk < standar)  and (indo < standar) then
-                      begin
-                        keterangan := '1. Matematika 2. Bhs. Indonesia';
-                      end
-                      else
-                        if (mtk < standar)  and (ing < standar) then
-                          begin
-                            keterangan := '1. Matematika 2. Bhs Inggris';
-                          end
-                          else
-                            if (mtk < standar)  and (ipa < standar) then
-                              begin
-                                keterangan := '1. Matematika 2. IPA';
-                              end
-                              else
-                                if (indo < standar) and (ing < standar) and (ipa < standar) then
-                                  begin
-                                    keterangan := '1. Bhs. Indonesia 2. Bhs. Inggris 3. IPA';
-                                  end
-                                  else
-                                    if (indo < standar) and (ing < standar) then
-                                      begin
-                                        keterangan := '1. Bhs. Indonesia 2. Bhs. Inggris';
-                                      end
-                                      else
-                                        if (indo < standar) and (ipa < standar) then
-                                          begin
-                                            keterangan := '1. Bhs. Indonesia 2. IPA';
-                                          end
-                                          else
-                                            if (ing < standar) and (ipa < standar) then
-                                              begin
-                                                keterangan := '1. Bhs. Inggris 2. IPA';
-                                              end
-                                              else
-                                                if (mtk < standar)  then
-                                                  begin
-                                                    keterangan := '1. Matematika';
-                                                  end
-                                                  else
-                                                    if (indo < standar)  then
-                                                      begin
-                                                        keterangan := '1. Bhs. Indonesia';
-                                                      end
-                                                      else
-                                                        if (ing < standar)  then
-                                                          begin
-                                                            keterangan := '1. Bhs. Inggris';
-                                                          end
-                                                          else
-                                                            if (ipa < standar)  then
-                                                              begin
-                                                                keterangan := '1. IPA';
-                                                              end;
+  
+  { Process }
+  if ((mtk < standar) and (indo < standar) and (ing < standar) and (ipa < standar)) then
+    // Directly output the failure message
+    begin
+      keterangan := 'maaf kamu tidak lulus';
+      writeln(nama, ', ', keterangan);
+    end
+  else if ((mtk >= standar) and (indo >= standar) and (ing >= standar) and (ipa >= standar)) then
+    // Directly output the success message
+    begin
+      keterangan := 'selamat kamu lulus semua mata pelajaran';
+      writeln(nama, ', ', keterangan);
+    end
+  else
+    // Check for each subject
+    // And add index for each failure subject
+    begin
+    keterangan := 'berikut mata pelajaran yang perlu kamu remedial: ';
+    writeln(nama, ', ', keterangan);
 
+    i := 0; // index
+      if (mtk < standar) then
+        begin
+          i += 1;
+          writeln(i, '. Matematika');
+        end;
+      if (indo < standar) then
+        begin
+          i += 1;
+          writeln(i, '. Bahasa Indonesia');
+        end;
+      if (ipa < standar) then
+        begin
+          i += 1;
+          writeln(i, '. IPA');
+        end;
+      if (ing < standar) then
+        begin
+          i += 1;
+          writeln(i, '. Bahasa Inggris');
+        end;
+    end; // End of each subject grading
 
-  writeln(nama, ' Tidak Lulus Dalam Mata Pelajaran : ');
-  writeln(keterangan);
   readln;
+
 end.
