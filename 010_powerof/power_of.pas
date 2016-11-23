@@ -17,14 +17,18 @@ end;
 { Process }
 function hitung(a, b: integer): integer;
 begin
-  if (b = 0) then begin
-    hitung := 1;
-    writeln;
-  end else begin
-    write(a);
-    if (b > 1) then
-      write(' * ');
-    hitung := a * hitung(a, b - 1);    
+  if (a = 0) or (b < 0) then
+    write('You cannot')
+  else
+    if (b = 0) then begin
+      hitung := 1;
+      writeln;
+    end else begin
+      write(a);
+      if (b > 1) then
+        write(' * ');
+      hitung := a * hitung(a, b - 1);    
+    end;
   end;
 end;
 
