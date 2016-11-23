@@ -14,11 +14,21 @@ var
     if (n = 0) or (n = 1) then
       fib := n
     else
+      // write(fib);
+      // if (n > 1) then
+      //   write(' + ');
       fib := fib(n - 1) + fib(n - 2);
   end;
 
   procedure tampil(hasil: integer);
+  var i: integer;
   begin
+    for i := 1 to n do begin
+      write(fib(i));
+      if i <> n then
+        write(', ');
+    end;
+    writeln;
     writeln('Hasil dari suku ke-', n, ' yaitu: ', hasil);
   end;
 
