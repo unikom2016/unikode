@@ -4,13 +4,12 @@ uses
 const
      maksbrg = 3;
 type
-    Larik1 = array[1..maksbrg] of string;
-    larik2 = array[1..maksbrg] of integer;
+    larik1 = array[1..maksbrg] of string;
+    larik2 = array[1..maksbrg] of longint;
 var
-  // stokBrg: larik;
-   kode,namabrg,status : larik1;
-   harga,stok          : larik2;
-   empty: string;
+  kode, tempKode, namabrg, status: larik1;
+  harga, stok: larik2;
+  currLen: integer;
 
 function isEmpty(kd: string): boolean;
 begin
@@ -25,10 +24,9 @@ begin
   len01 := comparetext(kd, 'brg01');
   len02 := comparetext(kd, 'brg02');
   len03 := comparetext(kd, 'brg03');
+  isInvalid := false;
   if (len01 <> 0) and (len02 <> 0) and (len03 <> 0) then
     isInvalid := true
-  else
-    isInvalid := false;
 end;
 
 function isEqual(kode1, kode2: string): boolean;
@@ -36,6 +34,31 @@ begin
   isEqual := false;
   if (kode1 = kode2) then
     isEqual := true;
+end;
+
+function isEqualInList(kd: string): boolean;
+var
+  found: boolean;
+  first, mid, last: integer;
+begin
+  // binary search, scan through half of array
+  found := false;
+  first := 0; last := maksbrg - 1;
+  while (not found) and (first <= last) do begin
+    mid := (first + last) div 2;
+    if kd < tempKode[mid] then
+      last := mid - 1
+    else begin
+      if kd > tempKode[mid] then
+        first := mid + 1
+      else
+        found := true;
+    end;
+  end;
+
+  // if (found) then
+  //   writeln('value of ', num, ' is already exists');
+  isEqualInList := found;
 end;
 
 function  konversinamabrg(kode:string) : string;
@@ -52,7 +75,7 @@ begin
 
 end;//endfunction
 
-function konversiharga(kode:string): integer;
+function konversiharga(kode:string): longint;
 {I.S                     }
 {F.S                     }
 begin
@@ -98,6 +121,7 @@ writeln('----------------------------------------------------------------------'
             gotoxy(6,i+5); writeln('|    |             |             |              |       |            |');
             gotoxy(8,i+5);write(i);
             gotoxy(13,i+5);readln(kode[i]);
+
             // cek kode yang kosong
             while (isEmpty(kode[i])) do
             begin
@@ -105,6 +129,7 @@ writeln('----------------------------------------------------------------------'
                 gotoxy(16,i+6);clreol;
                 gotoxy(13,i+5);readln(kode[i]);
             end;
+            
             // cek kode yang salah
             while (isInvalid(kode[i])) do
             begin
@@ -112,13 +137,15 @@ writeln('----------------------------------------------------------------------'
                 gotoxy(16,i+6);clreol;
                 gotoxy(13,i+5);readln(kode[i]);
             end;
+            
             // cek kode yang sama
-            while (isEqual(kode[i], kode[i - 1])) and (i <> 1) do
-            begin
-                gotoxy(16,i+6); write('Kode Barang Sama!'); readln;//47
-                gotoxy(16,i+6);clreol;
-                gotoxy(13,i+5);readln(kode[i]);
+            // while (isEqual(kode[i], kode[i - 1])) and (i <> 1) do
+            while (isEqualInList(kode[i])) do begin
+              gotoxy(16,i+6); write('Kode Barang Sama!'); readln;//47
+              gotoxy(16,i+6); clreol;
+              gotoxy(13,i+5); readln(kode[i]);
             end;
+
             namabrg[i]:= konversinamabrg(kode[i]);// Masukan ke array namabrg dengan fungsi konversinamabrg(kode)
             gotoxy(27,i+5);write(namabrg[i]);
             harga[i]:= konversiharga(kode[i]); // Masukan ke array harga dengan fungsi konversiharga(kode)
@@ -126,6 +153,9 @@ writeln('----------------------------------------------------------------------'
             gotoxy(56,i+5);readln(stok[i]);
             status[i]:= konversistatus(stok[i]);// Masukan ke array STATUS dengan fungsi konversistatus(stok)
             gotoxy(64,i+5);write(status[i]);
+            
+            // store previous code, in temp variable
+            tempKode[i] := kode[i];
        end;
 gotoxy(6,i+6);
 writeln('----------------------------------------------------------------------');
