@@ -14,9 +14,9 @@ var
 
 function isEmpty(kd: string): boolean;
 begin
+  isEmpty := false;
   if (kd = '') then
     isEmpty := true;
-  isEmpty := false;
 end;
 
 function isInvalid(kd: string): boolean;
@@ -91,17 +91,17 @@ writeln('----------------------------------------------------------------------'
             gotoxy(6,i+5); writeln('|    |             |             |              |       |            |');
             gotoxy(8,i+5);write(i);
             gotoxy(13,i+5);readln(kode[i]);
+            // cek kode yang kosong
+            while (isEmpty(kode[i])) do
+            begin
+                gotoxy(16,i+6); write('Kode Barang Tidak Boleh Kosong!'); readln;//47
+                gotoxy(16,i+6);clreol;
+                gotoxy(13,i+5);readln(kode[i]);
+            end;
             // cek kode yang salah
             while (isInvalid(kode[i])) do
             begin
                 gotoxy(16,i+6); write('Kode Barang Salah!'); readln;//47
-                gotoxy(16,i+6);clreol;
-                gotoxy(13,i+5);readln(kode[i]);
-            end;
-            // cek kode yang kosong
-            while (kode[i]='') do
-            begin
-                gotoxy(16,i+6); write('Kode Barang Tidak Boleh Kosong!'); readln;//47
                 gotoxy(16,i+6);clreol;
                 gotoxy(13,i+5);readln(kode[i]);
             end;
