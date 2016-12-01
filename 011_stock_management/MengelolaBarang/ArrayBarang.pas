@@ -31,6 +31,13 @@ begin
     isInvalid := false;
 end;
 
+function isEqual(kode1, kode2: string): boolean;
+begin
+  isEqual := false;
+  if (kode1 = kode2) then
+    isEqual := true;
+end;
+
 function  konversinamabrg(kode:string) : string;
 {I.S                    }
 {F.S                    }
@@ -102,6 +109,13 @@ writeln('----------------------------------------------------------------------'
             while (isInvalid(kode[i])) do
             begin
                 gotoxy(16,i+6); write('Kode Barang Salah!'); readln;//47
+                gotoxy(16,i+6);clreol;
+                gotoxy(13,i+5);readln(kode[i]);
+            end;
+            // cek kode yang sama
+            while (isEqual(kode[i], kode[i - 1])) and (i <> 1) do
+            begin
+                gotoxy(16,i+6); write('Kode Barang Sama!'); readln;//47
                 gotoxy(16,i+6);clreol;
                 gotoxy(13,i+5);readln(kode[i]);
             end;
