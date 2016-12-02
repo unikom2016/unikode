@@ -4,11 +4,11 @@ uses
 const
      maksbrg = 3;
 type
-    larik1 = array[1..maksbrg] of string;
-    larik2 = array[1..maksbrg] of longint;
+    arrStr = array[1..maksbrg] of string;
+    arrInt = array[1..maksbrg] of longint;
 var
-  kode, tempKode, namabrg, status: larik1;
-  harga, stok: larik2;
+  kode, tempKode, namabrg, status: arrStr;
+  harga, stok: arrInt;
   currLen: integer;
 
 function isEmpty(kd: string): boolean;
@@ -21,7 +21,7 @@ end;
 function isInvalid(kd: string): boolean;
 var len01, len02, len03: integer;
 begin
-  len01 := comparetext(kd, 'brg01');
+  len01 := comparetext(kd, 'brg01'); // case-insensitive
   len02 := comparetext(kd, 'brg02');
   len03 := comparetext(kd, 'brg03');
   isInvalid := false;
@@ -36,15 +36,49 @@ begin
     isEqual := true;
 end;
 
+procedure sort;
+var
+    prevUnsorted, i: integer;
+    swapped: boolean;
+    temp: string;
+begin
+  // using bubble sort algorithm
+  repeat
+    swapped := false;
+    prevUnsorted := currlen;
+    for i := 1 to prevUnsorted do begin
+        if (tempKode[i] > tempKode[i + 1]) then begin
+          temp := tempKode[i];
+          tempKode[i] := tempKode[i + 1];
+          tempKode[i + 1] := temp;
+          swapped := true;
+          // writeln('swapped');
+        end;
+        // writeln('maximum reached');
+    end;
+    prevUnsorted := prevUnsorted - 1;
+    // writeln('mark previous max, as sorted element');
+  until (swapped);
+end;
+
+function isSorted(kd: arrStr): boolean;
+begin
+  // if 
+
+end;
+
 function isEqualInList(kd: string): boolean;
 var
   found: boolean;
   first, mid, last: integer;
 begin
-  // binary search, scan through half of array
+  // using binary search algorithm
+  // even though it's doesn't have to.
+  // due to small element in the list / array
+  // use linear search instead.
   found := false;
   first := 1; last := currLen;
-  while (not found) and (first <= last) do begin
+  while (not found) and (first <= last) {and (isSorted(kode))} do begin
     mid := (first + last) div 2;
     if kd < tempKode[mid] then
       last := mid - 1
@@ -137,7 +171,6 @@ writeln('----------------------------------------------------------------------'
             end;
             
             // cek kode yang sama
-            // while (isEqual(kode[i], kode[i - 1])) and (i <> 1) do
             while (isEqualInList(kode[i])) do begin
               gotoxy(16,i+6); write('Kode Barang Sama!'); readln;//47
               gotoxy(16,i+6); clreol;
@@ -155,6 +188,8 @@ writeln('----------------------------------------------------------------------'
             // store previous code, in temp variable
             tempKode[i] := kode[i];
             currLen := i;
+            if i > 1 then
+              sort; // sort the element first
        end;
 gotoxy(6,i+6);
 writeln('----------------------------------------------------------------------');
