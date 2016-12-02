@@ -59,6 +59,10 @@ begin
     prevUnsorted := prevUnsorted - 1;
     // writeln('mark previous max, as sorted element');
   until (swapped);
+
+  // for i := 1 to maksbrg do begin
+  //   writeln(tempKode[i]);
+  // end;
 end;
 
 function isSorted(kd: arrStr): boolean;
