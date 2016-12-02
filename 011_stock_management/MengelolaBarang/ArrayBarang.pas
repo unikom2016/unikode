@@ -43,17 +43,15 @@ var
 begin
   // binary search, scan through half of array
   found := false;
-  first := 0; last := maksbrg - 1;
+  first := 1; last := currLen;
   while (not found) and (first <= last) do begin
     mid := (first + last) div 2;
     if kd < tempKode[mid] then
       last := mid - 1
-    else begin
-      if kd > tempKode[mid] then
-        first := mid + 1
-      else
+    else if kd > tempKode[mid] then
+      first := mid + 1
+    else
         found := true;
-    end;
   end;
 
   // if (found) then
@@ -156,6 +154,7 @@ writeln('----------------------------------------------------------------------'
             
             // store previous code, in temp variable
             tempKode[i] := kode[i];
+            currLen := i;
        end;
 gotoxy(6,i+6);
 writeln('----------------------------------------------------------------------');
