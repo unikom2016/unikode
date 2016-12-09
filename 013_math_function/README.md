@@ -16,3 +16,6 @@ http://ncalculators.com/statistics/harmonic-mean-calculator.htm
 
 - GM
 https://www.mathsisfun.com/numbers/geometric-mean.html
+
+- Nth root of x
+http://www.cplusplus.com/forum/beginner/46388/

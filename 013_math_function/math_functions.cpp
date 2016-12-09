@@ -19,7 +19,7 @@ float harmonic_mean(int batas, float angka[]);
 // fungsi mencari nilai range
 float range(float variance);
 // fungsi mencari nilai geometris
-float geometric_mean(int batas, float angka[]);
+long double geometric_mean(int batas, float angka[]);
 
 // main fungsi
 int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
@@ -70,7 +70,7 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
 
   //menampilkan Geometric Mean
   cout << "\n (Geometric Mean)\t: ";
-  printf("%.2f", geometric_mean(batas_acak, angka));
+  printf("%.2Lf", geometric_mean(batas_acak, angka)); // Lf => long double
   cout << endl;
 
   cout << "---------------------------------------------------------" << endl;	
@@ -79,10 +79,10 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
 void isi(int &batas, float *angka, float &jumlah) {
   //looping bilangan acak
   for(int i = 0; i < batas; i++) {
-    cout << "Angka ke "<< i + 1 <<" : ";
-    cin >> angka[i]; 
-    // srand(i); // seed, initialize new random value
-    // angka[i] = rand() % 100 + 1; // masukkan angka acak ke dalam array "angka"
+    // cout << "Angka ke "<< i + 1 <<" : ";
+    // cin >> angka[i]; 
+    srand(i); // seed, initialize new random value
+    angka[i] = rand() % 100 + 1; // masukkan angka acak ke dalam array "angka"
     jumlah += angka[i]; // jumlahkan semua "angka"
   }
 }
@@ -135,8 +135,8 @@ float range(float variance) {
   return sqrt(variance); // standard deviation atau range
 }
 
-float geometric_mean(int batas, float angka[]) {
-  float jumlah = 1.0;
+long double geometric_mean(int batas, float angka[]) {
+  long double jumlah = 1;
   float gm = 1.0 / batas;
   // cout << endl;
   for (int i = 0; i < batas; i++) {
