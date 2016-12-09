@@ -3,7 +3,8 @@ program power_of;
 
 { Kamus Global }
 var
-  a, b, hasil: integer;
+  a, b: integer;
+  hasil: int64;
 
 { Input }
 procedure isi(var a, b: integer);
@@ -15,11 +16,11 @@ begin
 end;
 
 { Process }
-function hitung(a, b: integer): integer;
+function hitung(a, b: integer): int64;
 begin
   if (a = 0) or (b < 0) then
     write('You cannot')
-  else
+  else begin
     if (b = 0) then begin
       hitung := 1;
       writeln;
@@ -33,7 +34,7 @@ begin
 end;
 
 { Output }
-procedure tampil(hasil: integer);
+procedure tampil(hasil: int64);
 begin
   writeln('Hasil a^b: ', hasil);
 end;
