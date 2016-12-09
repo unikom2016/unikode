@@ -13,11 +13,11 @@ void tampil(int batas, float angka[], float jumlah);
 // fungsi mencari nilai mean
 float mean(int batas, float jumlah);
 // fungsi mencari nilai mean deviation
-float mean_deviation(int batas, float angka[], float rata);
+float mean_deviation(int batas, float angka[], float rata, float &variance);
 // fungsi mencari nilai harmonic mean
 float harmonic_mean(int batas, float angka[]);
 // fungsi mencari nilai range
-float range(int batas, float angka[]);
+float range(float variance);
 // fungsi mencari nilai geometris
 float geometric_mean(int batas, float angka[]);
 
@@ -31,7 +31,7 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
   //keterangan variabel
   float *angka = new float[batas_acak];
   float *s = new float[batas_acak];
-  float jumlah = 0, rata, M, simp_rata;
+  float jumlah = 0, rata, M, simp_rata, variance;
 
   isi(batas_acak, angka, jumlah); // isi array
 
@@ -45,7 +45,7 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
   rata = mean(batas_acak, jumlah);
 
   // hitung mean deviation
-  simp_rata = mean_deviation(batas_acak, angka, rata);
+  simp_rata = mean_deviation(batas_acak, angka, rata, variance);
 
   //membuat tabel
   cout << "\n---------------------------------------------------------";
@@ -64,8 +64,8 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
   cout << endl;
 
   //menampilkan range
-  cout << "\n (Range)\t: ";
-  printf("%.2f", range(batas_acak, angka));
+  cout << "\n (Range atau Standar Deviasi)\t: ";
+  printf("%.2f", range(variance));
   cout << endl;
 
   //menampilkan Geometric Mean
@@ -79,7 +79,8 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
 void isi(int &batas, float *angka, float &jumlah) {
   //looping bilangan acak
   for(int i = 0; i < batas; i++) {
-    // cout << "Angka ke "<< i + 1 <<" : "; 
+    // cout << "Angka ke "<< i + 1 <<" : ";
+    // cin >> angka[i]; 
     // cout << endl;
     srand(i); // seed, initialize new random value
     angka[i] = rand() % 100 + 1; // masukkan angka acak ke dalam array "angka"
@@ -100,13 +101,25 @@ float mean(int batas, float jumlah) {
   return jumlah / batas;
 }
 
-float mean_deviation(int batas, float angka[], float rata) {
+float mean_deviation(int batas, float angka[], float rata, float &variance) {
   float jumlah_md = 0;
+  float jml_variance = 0;
   float *angka_temp = new float[batas];
+  // cout << "Total pangkat 2, mencari standar deviasi: " << endl;
   for(int i = 0; i < batas; i++) {
     angka_temp[i] = abs(angka[i] - rata);
+    jml_variance += pow(angka_temp[i], 2);
+    // cout << jml_variance;
+    // if (i != batas - 1) {
+    //   cout << " + ";
+    // } else {
+    //   cout << " / " << batas;
+    // }
     jumlah_md += angka_temp[i];
   }
+  // cout << endl;
+  variance = jml_variance / batas;
+  // cout << "Varians: " << variance << "; o^2: " << jml_variance << endl;
   return jumlah_md / batas;
 }
 
@@ -118,8 +131,9 @@ float harmonic_mean(int batas, float angka[]) {
   return batas / jumlah_hm;
 }
 
-float range(int batas, float angka[]) {
-  return *max_element(angka, angka+batas) - *min_element(angka, angka+batas);
+float range(float variance) {
+  // return *max_element(angka, angka+batas) - *min_element(angka, angka+batas);
+  return sqrt(variance); // standard deviation atau range
 }
 
 float geometric_mean(int batas, float angka[]) {
