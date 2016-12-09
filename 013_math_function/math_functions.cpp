@@ -79,11 +79,10 @@ int main(int a, char** b) { // variabel a sama b ini buat apa? wkwk
 void isi(int &batas, float *angka, float &jumlah) {
   //looping bilangan acak
   for(int i = 0; i < batas; i++) {
-    // cout << "Angka ke "<< i + 1 <<" : ";
-    // cin >> angka[i]; 
-    // cout << endl;
-    srand(i); // seed, initialize new random value
-    angka[i] = rand() % 100 + 1; // masukkan angka acak ke dalam array "angka"
+    cout << "Angka ke "<< i + 1 <<" : ";
+    cin >> angka[i]; 
+    // srand(i); // seed, initialize new random value
+    // angka[i] = rand() % 100 + 1; // masukkan angka acak ke dalam array "angka"
     jumlah += angka[i]; // jumlahkan semua "angka"
   }
 }
@@ -137,10 +136,14 @@ float range(float variance) {
 }
 
 float geometric_mean(int batas, float angka[]) {
-  float jumlah = 1;
-  float gm = 1 / batas;
+  float jumlah = 1.0;
+  float gm = 1.0 / batas;
+  // cout << endl;
   for (int i = 0; i < batas; i++) {
    jumlah *= angka[i];
+  //  cout << jumlah << " ";
   }
+  // cout << endl;
+  // cout << "N root: " << gm;
   return pow(jumlah, gm);
 }

@@ -13,3 +13,6 @@ http://www.learncpp.com/cpp-tutorial/73-passing-arguments-by-reference/
 
 - Harmonic mean
 http://ncalculators.com/statistics/harmonic-mean-calculator.htm
+
+- GM
+https://www.mathsisfun.com/numbers/geometric-mean.html
